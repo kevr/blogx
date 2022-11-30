@@ -5,3 +5,6 @@ blogx/__pycache__/
 # Virtualenv locations
 venv/
 venv.dev/
+
+# Exclude SQLite database
+db.sqlite3
