@@ -24,8 +24,11 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-
+# The admin can supply more allowed hosts separated by
+# spaces in the HOSTS envvar.
+# Ex: HOSTS="abc.com www.abc.com" HOSTS="abc.com"
+HOSTS = os.environ.get("HOSTS", "").split(" ")
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"] + HOSTS
 
 # Application definition
 INSTALLED_APPS = [
