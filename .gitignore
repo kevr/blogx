@@ -1,0 +1,7 @@
+# Possibly python cache locations
+__pycache__/
+blogx/__pycache__/
+
+# Virtualenv locations
+venv/
+venv.dev/
