@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.db import models
-from django.db.models import DateTimeField, ForeignKey, IntegerField, TextField
+from django.db.models import AutoField, DateTimeField, ForeignKey, TextField
 
 
 class Post(models.Model):
-    id = IntegerField(primary_key=True)
+    id = AutoField(primary_key=True)
 
     author = ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -12,5 +12,5 @@ class Post(models.Model):
     )
 
     content = TextField()
-    created = DateTimeField()
+    created = DateTimeField(auto_now=True)
     edited = DateTimeField(blank=True, null=True)
