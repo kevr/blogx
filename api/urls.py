@@ -5,6 +5,7 @@ from . import views
 
 router = DefaultRouter()
 router.register(r"users", views.Users)
+router.register(r"posts", views.Posts)
 
 urlpatterns = [
     path("", include(router.urls)),
