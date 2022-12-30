@@ -125,5 +125,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
+        # NOTE: To exempt CSRF, api.middleware.CsrfExemptSessionAuthentication
+        # should be used within particularly exempt views.
     ],
 }
