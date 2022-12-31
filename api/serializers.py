@@ -19,11 +19,18 @@ class UserSerializer(HyperlinkedModelSerializer):
 
 
 class PostSerializer(HyperlinkedModelSerializer):
+    author = SerializerMethodField()
+
     class Meta:
         model = Post
         read_only = ["id", "url", "author", "created", "edited"]
         fields = ["id", "url", "author", "content", "created", "edited"]
         update_fields = ["content", "edited"]
+
+    def create(self, data: dict) -> Post:
+        user = self.context.get("request").user
+        data["author"] = user
+        return super().create(data)
 
     def update(self, post: Post, data: dict) -> Post:
         content = data.get("content", post.content)
@@ -40,3 +47,6 @@ class PostSerializer(HyperlinkedModelSerializer):
             post.save()
 
         return post
+
+    def get_author(self, post: Post) -> str:
+        return f"/users/{post.author.id}/"
