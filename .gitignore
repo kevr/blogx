@@ -8,3 +8,6 @@ venv.dev/
 
 # Exclude SQLite database
 db.sqlite3
+
+# Exclude coverage data
+.coverage
