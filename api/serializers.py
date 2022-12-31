@@ -21,7 +21,7 @@ class UserSerializer(HyperlinkedModelSerializer):
 class PostSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = Post
-        read_only = ["id", "url", "author", "created"]
+        read_only = ["id", "url", "author", "created", "edited"]
         fields = ["id", "url", "author", "content", "created", "edited"]
         update_fields = ["content", "edited"]
 
@@ -32,7 +32,11 @@ class PostSerializer(HyperlinkedModelSerializer):
             # The content and edited timestamp are only updated if
             # content has actually changed:
             post.content = data.get("content", post.content)
-            post.edited = datetime.utcnow()
+
+            # Update the edited column to the current UTC ISO timestamp
+            dt = datetime.utcnow()
+            post.edited = dt.isoformat() + "Z"
+
             post.save()
 
         return post
