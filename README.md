@@ -30,6 +30,17 @@ For development use, both [requirements.txt](requirements.txt) and
     $ pip install -r requirements.txt
     $ pip install -r requirements.dev.txt
 
+Preparing the Database
+----------------------
+
+Before running the website, the database will need to be initialized
+via Django migrations:
+
+    $ python manage.py migrate
+
+Once this is complete, you can move on to
+[Running the Website](#running-the-website).
+
 Running the Website
 -------------------
 
