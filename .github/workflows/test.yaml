@@ -27,3 +27,6 @@ jobs:
       - name: Run Django tests
         run: |
           coverage run manage.py test
+      - name: Produce a coverage report
+        run: |
+          coverage report --fail-under=100
