@@ -10,3 +10,4 @@ platformdirs==2.5.4
 pycodestyle==2.10.0
 pyflakes==3.0.1
 tomli==2.0.1
+coverage==7.0.1
