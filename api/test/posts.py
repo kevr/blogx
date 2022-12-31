@@ -3,9 +3,10 @@ from http import HTTPStatus
 from typing import Any
 
 from api.models import Post
+from api.serializers import UserSerializer
 from django.contrib.auth.models import User
 from django.test import TestCase
-from rest_framework.test import APIClient
+from rest_framework.test import APIClient, APIRequestFactory
 
 
 class PostsTest(TestCase):
@@ -89,10 +90,15 @@ class PostsTest(TestCase):
         data = response.json()
         self.assertEqual(data.get("id"), post.id)
         self.assertTrue(data.get("url").endswith(f"{post.id}/"))
-        self.assertTrue(data.get("author").endswith(f"{self.user.id}/"))
         self.assertEqual(data.get("content"), post.content)
         self.assertNotEqual(data.get("created"), None)
         self.assertEqual(data.get("edited"), None)
+
+        # Compare author output against UserSerializer
+        request_factory = APIRequestFactory()
+        request = request_factory.get(endpoint)
+        author = UserSerializer(self.user, context={"request": request}).data
+        self.assertEqual(author, data.get("author"))
 
     def test_patch_unauthorized(self) -> None:
         post = self.posts[0]
@@ -132,10 +138,6 @@ class PostsTest(TestCase):
         url_tail = f"/posts/{post.id}/"
         self.assertTrue(data.get("url").endswith(url_tail))
 
-        # Ensure that self.user.id was used as a tail in API's "author" field
-        author_tail = f"/users/{self.user.id}/"
-        self.assertTrue(data.get("author").endswith(author_tail))
-
         # Compare the 'content' column
         self.assertEqual(post.content, data.get("content"))
 
@@ -150,6 +152,12 @@ class PostsTest(TestCase):
             data.get("edited").rstrip("Z")
         ).astimezone(post.edited.tzinfo)
         self.assertEqual(post.edited, edited)
+
+        # Compare author output against UserSerializer
+        request_factory = APIRequestFactory()
+        request = request_factory.patch(endpoint, data=data, format="json")
+        author = UserSerializer(self.user, context={"request": request}).data
+        self.assertEqual(author, data.get("author"))
 
     def test_put_unauthorized(self) -> None:
         post = self.posts[0]

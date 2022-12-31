@@ -19,7 +19,7 @@ class UserSerializer(HyperlinkedModelSerializer):
 
 
 class PostSerializer(HyperlinkedModelSerializer):
-    author = SerializerMethodField()
+    author = UserSerializer(required=False)
 
     class Meta:
         model = Post
@@ -47,6 +47,3 @@ class PostSerializer(HyperlinkedModelSerializer):
             post.save()
 
         return post
-
-    def get_author(self, post: Post) -> str:
-        return f"/users/{post.author.id}/"
