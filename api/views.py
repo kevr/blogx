@@ -35,10 +35,6 @@ class Posts(ModelViewSet):
             *args, context={"request": request}, **kwargs
         )
 
-    def _error(self, message: str) -> dict:
-        """Return a JSON error message in dict format"""
-        return {"error": message}
-
     def create(self, request: HttpRequest) -> Response:
         """HTTP POST"""
         serializer = self._serializer(request, data=request.data)
@@ -50,10 +46,6 @@ class Posts(ModelViewSet):
         self, request: HttpRequest, partial: bool = False, pk: int = None
     ) -> Response:
         """HTTP PUT is unsupported and responds with METHOD_NOT_ALLOWED"""
-
-        if partial:
-            return self.partial_update(self, request, pk=pk)
-
         return Response(status=HTTPStatus.METHOD_NOT_ALLOWED)
 
     def partial_update(self, request: HttpRequest, pk: int = None) -> Response:
