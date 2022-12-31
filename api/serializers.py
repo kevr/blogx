@@ -25,7 +25,7 @@ class PostSerializer(HyperlinkedModelSerializer):
         model = Post
         read_only = ["id", "url", "author", "created", "edited"]
         fields = ["id", "url", "author", "content", "created", "edited"]
-        update_fields = ["content", "edited"]
+        update_fields = ["content"]
 
     def create(self, data: dict) -> Post:
         user = self.context.get("request").user
