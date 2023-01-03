@@ -42,6 +42,11 @@
       "src/**/*.{js,jsx}",
       "!src/index.js",
       "!src/reportWebVitals.js"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 100
+      }
+    }
   }
 }

@@ -17,4 +17,4 @@ jobs:
       - name: Install Node dependencies
         run: cd frontend && npm ci
       - name: Run React tests
-        run: cd frontend && npm test
+        run: cd frontend && npm test -- --coverage .
