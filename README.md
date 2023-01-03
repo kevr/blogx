@@ -1,8 +1,8 @@
 blogx
 -----
 
-![tests workflow](https://github.com/kevr/blogx/actions/workflows/tests.yaml/badge.svg?branch=master)<br />
-<small>100% coverage is required for the tests workflow to pass</small>
+![django workflow](https://github.com/kevr/blogx/actions/workflows/django.yaml/badge.svg?branch=master) ![react workflow](https://github.com/kevr/blogx/actions/workflows/react.yaml/badge.svg?branch=master)<br />
+<small>100% coverage is required for test workflows to pass</small>
 
 A database-driven blog website developed using Django for its API and React
 for its frontend component.
