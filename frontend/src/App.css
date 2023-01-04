@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.content {
+  background-color: rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  width: 80%;
+  max-width: 1080px;
+  flex: 1 1 auto;
+}
