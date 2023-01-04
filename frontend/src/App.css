@@ -11,8 +11,11 @@
 }
 
 .app-logo {
-  height: 40vmin;
+  height: 60px;
   pointer-events: none;
+  position: fixed;
+  top: 10px;
+  left: 0px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
