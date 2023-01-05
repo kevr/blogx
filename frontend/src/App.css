@@ -1,3 +1,8 @@
+* {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
 .app {
   text-align: center;
   background-color: #282c34;
@@ -13,9 +18,7 @@
 .app-logo {
   height: 60px;
   pointer-events: none;
-  position: fixed;
-  top: 10px;
-  left: 0px;
+  text-align: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -37,10 +40,36 @@
   }
 }
 
+/* General webpage */
+.page {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+}
+
+/* Regions to the left and right of .content */
+.sidebar {
+  flex: 1 1 auto;
+  text-align: center;
+  position: relative;
+}
+
 .content {
   background-color: rgba(0, 0, 0, 0.15);
   padding: 20px;
-  width: 80%;
+  width: 60%;
   max-width: 1080px;
-  flex: 1 1 auto;
+}
+
+.centered {
+  padding-top: 10px;
+}
+
+.centered {
+  position: absolute;
+  left: 0;
+  right: 0;
+  font-size: 16px;
+  color: white;
 }
