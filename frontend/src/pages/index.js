@@ -1,9 +1,9 @@
 import Home from "./Home";
 import Login from "./Login";
 
+// Optional exports
 export { Home, Login };
 
-export default {
-  Home,
-  Login,
-};
+// Default export
+const exports = { Home, Login };
+export default exports;
