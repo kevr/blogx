@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import AuthWidget from "./AuthWidget";
 import logo from "./logo.svg";
 
 const Layout = ({ children }) => {
@@ -12,7 +13,9 @@ const Layout = ({ children }) => {
         </Link>
       </div>
       <div className="content">{children}</div>
-      <div className="sidebar"></div>
+      <div className="sidebar">
+        <AuthWidget />
+      </div>
     </div>
   );
 };

@@ -62,11 +62,15 @@
   max-width: 1080px;
 }
 
+.auth-widget {
+  padding-top: 20px;
+}
+
 .centered {
   padding-top: 10px;
 }
 
-.centered {
+.auth-widget > a, .centered {
   position: absolute;
   left: 0;
   right: 0;
