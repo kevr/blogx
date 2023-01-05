@@ -55,6 +55,9 @@
       }
     }
   },
+  "prettier": {
+    "printWidth": 79
+  },
   "devDependencies": {
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
