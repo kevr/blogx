@@ -27,7 +27,7 @@ DEBUG = True
 # The admin can supply more allowed hosts separated by
 # spaces in the HOSTS envvar.
 # Ex: HOSTS="abc.com www.abc.com" HOSTS="abc.com"
-HOSTS = os.environ.get("HOSTS", "").split(" ")
+HOSTS = [host for host in os.environ.get("HOSTS", "").split(" ") if host]
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"] + HOSTS
 
 # Application definition
@@ -38,12 +38,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",
     "api",
 ]
 
 # Middleware
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -129,3 +131,12 @@ REST_FRAMEWORK = {
         # should be used within particularly exempt views.
     ],
 }
+
+# CORS configuration
+scheme = "http"
+if not DEBUG:
+    scheme = "https"
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [f"{scheme}://{host}" for host in HOSTS]
+print(f"Allowed origins: {CORS_ALLOWED_ORIGINS}")
