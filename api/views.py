@@ -3,13 +3,11 @@ from http import HTTPStatus
 from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
-from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from .middleware import CsrfExemptSessionAuthentication
 from .models import Post
 from .serializers import PostSerializer, UserSerializer
 
@@ -29,14 +27,6 @@ class Users(ModelViewSet):
 class Posts(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-
-    # /posts/... are API routes for which we do not expect CSRF
-    # to be satisfied, therefore we explicitly define the exemption here
-    # instead of utilizing rest_framework.authentication.SessionMiddleware:
-    authentication_classes = [
-        BasicAuthentication,
-        CsrfExemptSessionAuthentication,
-    ]
 
     def _serializer(self, request: HttpRequest, *args, **kwargs) -> Response:
         """Return a serialized Post response"""
