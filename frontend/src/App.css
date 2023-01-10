@@ -64,6 +64,11 @@
 
 .auth-widget {
   padding-top: 20px;
+  font-size: 16px;
+}
+
+.auth-widget a {
+  color: white;
 }
 
 .centered {
