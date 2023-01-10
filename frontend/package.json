@@ -54,7 +54,11 @@
         "branches": 100,
         "lines": 100
       }
-    }
+    },
+    "coverageReporters": [
+      "text",
+      "html"
+    ]
   },
   "prettier": {
     "printWidth": 79
