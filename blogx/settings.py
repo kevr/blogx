@@ -134,7 +134,7 @@ REST_FRAMEWORK = {
 # CORS configuration
 scheme = "http"
 if not DEBUG:
-    scheme = "https"
+    scheme = "https"  # pragma: no cover
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [f"{scheme}://{host}" for host in HOSTS]
