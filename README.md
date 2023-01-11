@@ -1,7 +1,7 @@
 blogx
 -----
 
-![django workflow](https://github.com/kevr/blogx/actions/workflows/django.yaml/badge.svg?branch=master) ![react workflow](https://github.com/kevr/blogx/actions/workflows/react.yaml/badge.svg?branch=master)<br />
+![django workflow](https://github.com/kevr/blogx/actions/workflows/django.yaml/badge.svg?branch=master) ![react workflow](https://github.com/kevr/blogx/actions/workflows/react.yaml/badge.svg?branch=master) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)<br />
 <small>100% coverage is required for test workflows to pass</small>
 
 A database-driven blog website developed using Django for its API and React
