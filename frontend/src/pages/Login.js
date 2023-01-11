@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiLogin } from "../API";
-import M from "materialize-css";
 
 const Login = () => {
   const [user, setUser] = useState("");
