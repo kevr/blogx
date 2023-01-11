@@ -61,15 +61,27 @@ const AuthWidget = () => {
 
   const content = !session ? (
     <div className="centered">
-      <Link to="/login/">Login</Link>
+      <Link
+        to="/login/"
+        className="waves-effect waves-light red lighten-1 btn"
+      >
+        Login
+      </Link>
     </div>
   ) : (
     <div className="centered">
-      <div>Logged in as:</div>
-      <div>{session.username}</div>
-      <a href="/logout/" onClick={onLogout}>
-        Logout
-      </a>
+      <div className="row">
+        <b>{session.username}</b>
+      </div>
+      <div className="row">
+        <a
+          href="/logout/"
+          className="waves-effect waves-light red lighten-1 btn"
+          onClick={onLogout}
+        >
+          Logout
+        </a>
+      </div>
     </div>
   );
 
