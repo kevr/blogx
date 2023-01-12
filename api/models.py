@@ -16,3 +16,6 @@ class Post(models.Model):
     content = TextField()
     created = DateTimeField(auto_now=True)
     edited = DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.title} ({self.id})"

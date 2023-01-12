@@ -84,6 +84,10 @@ class PostsTest(TestCase):
 
         return endpoint
 
+    def test_post_str(self) -> None:
+        post = self.posts[0]
+        self.assertEqual(str(post), f"{post.title} ({post.id})")
+
     def test_post_unauthorized(self) -> None:
         data = {"content": "test"}
         endpoint = self._endpoint()
