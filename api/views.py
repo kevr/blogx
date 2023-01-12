@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Post
-from .serializers import PostSerializer, UserSerializer
+from .serializers import PostSerializer, PostTitleSerializer, UserSerializer
 
 
 class Status(APIView):
@@ -24,8 +24,21 @@ class Users(ModelViewSet):
     serializer_class = UserSerializer
 
 
+class PostTitles(APIView):
+    serializer_class = PostTitleSerializer
+
+    def get_queryset(self):
+        return Post.objects.order_by("created").all()
+
+    def get(self, request: HttpRequest) -> Response:
+        serializer = self.serializer_class(
+            self.get_queryset(), context={"request": request}, many=True
+        )
+        return Response(serializer.data)
+
+
 class Posts(ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.order_by("created").all()  # Most recent first
     serializer_class = PostSerializer
 
     def _serializer(self, request: HttpRequest, *args, **kwargs) -> Response:

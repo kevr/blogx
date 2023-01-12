@@ -11,6 +11,7 @@ router.register(r"posts", views.Posts)
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("titles/", views.PostTitles.as_view()),
     path("auth/status/", views.Status.as_view()),
     path("auth/", include("rest_framework.urls")),
     path("api/token/", TokenObtainPairView.as_view()),

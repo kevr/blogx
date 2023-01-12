@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
-from django.db.models import AutoField, DateTimeField, ForeignKey, TextField
+from django.db.models import (AutoField, CharField, DateTimeField, ForeignKey,
+                              TextField)
 
 
 class Post(models.Model):
@@ -11,6 +12,7 @@ class Post(models.Model):
         on_delete=models.CASCADE,
     )
 
+    title = CharField(max_length=256)
     content = TextField()
     created = DateTimeField(auto_now=True)
     edited = DateTimeField(blank=True, null=True)

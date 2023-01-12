@@ -18,14 +18,38 @@ class UserSerializer(HyperlinkedModelSerializer):
         return f"{user.first_name} {user.last_name}".strip()
 
 
+class PostTitleSerializer(HyperlinkedModelSerializer):
+    author = UserSerializer(required=False)
+
+    class Meta:
+        model = Post
+        read_only = ["id", "url", "author", "created", "edited"]
+        fields = [
+            "id",
+            "url",
+            "author",
+            "title",
+            "created",
+            "edited",
+        ]
+
+
 class PostSerializer(HyperlinkedModelSerializer):
     author = UserSerializer(required=False)
 
     class Meta:
         model = Post
         read_only = ["id", "url", "author", "created", "edited"]
-        fields = ["id", "url", "author", "content", "created", "edited"]
-        update_fields = ["content"]
+        fields = [
+            "id",
+            "url",
+            "author",
+            "title",
+            "content",
+            "created",
+            "edited",
+        ]
+        update_fields = ["title", "content"]
 
     def create(self, data: dict) -> Post:
         user = self.context.get("request").user
@@ -34,16 +58,21 @@ class PostSerializer(HyperlinkedModelSerializer):
 
     def update(self, post: Post, data: dict) -> Post:
         content = data.get("content", post.content)
+        title = data.get("title", post.content)
 
+        changed = False
         if content != post.content:
-            # The content and edited timestamp are only updated if
-            # content has actually changed:
-            post.content = data.get("content", post.content)
+            post.content = content
+            changed = True
 
+        if title != post.title:
+            post.title = title
+            changed = True
+
+        if changed:
             # Update the edited column to the current UTC ISO timestamp
             dt = datetime.utcnow()
             post.edited = dt.isoformat() + "Z"
-
             post.save()
 
         return post

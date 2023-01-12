@@ -9,6 +9,48 @@ from django.test import TestCase
 from rest_framework.test import APIClient, APIRequestFactory
 
 
+class PostTitlesTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+
+        self.user = User.objects.create_user(
+            username="test_user",
+            email="test_user@example.org",
+            password="test_password",
+            # is_superuser=True is currently required due to
+            # rest_framework's default permissions.
+            # TODO: Resolve this. Each user should be able to manage
+            # their _own_ posts, and staff or superusers should be
+            # able to manage _any_ post.
+            is_superuser=True,
+        )
+
+        self.posts = [
+            Post.objects.create(author=self.user, content="post1"),
+            Post.objects.create(author=self.user, content="post2"),
+        ]
+
+    def test_titles(self) -> None:
+        endpoint = "/titles/"
+        response = self.client.get(endpoint)
+        self.assertEqual(response.status_code, 200)
+
+        data = response.json()
+        self.assertTrue(isinstance(data, list))
+        self.assertEqual(len(data), len(self.posts))
+
+        post, json = self.posts[0], data[0]
+        self.assertEqual(json.get("id"), post.id)
+        self.assertTrue(json.get("url").endswith(f"{post.id}/"))
+        self.assertTrue(json.get("author", None) is not None)
+        self.assertEqual(json.get("title"), post.title)
+        self.assertNotEqual(json.get("created"), None)
+        self.assertEqual(json.get("edited"), None)
+
+        # /titles/ should exclude the content column from output
+        self.assertTrue(json.get("content", None) is None)
+
+
 class PostsTest(TestCase):
     def setUp(self):
         self.client = APIClient()
@@ -50,7 +92,7 @@ class PostsTest(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.UNAUTHORIZED)
 
     def test_post(self) -> None:
-        data = {"content": "test"}
+        data = {"title": "Test Post", "content": "test"}
         endpoint = self._endpoint()
 
         self.client.force_authenticate(self.user)
@@ -91,6 +133,7 @@ class PostsTest(TestCase):
         self.assertEqual(data.get("id"), post.id)
         self.assertTrue(data.get("url").endswith(f"{post.id}/"))
         self.assertEqual(data.get("content"), post.content)
+        self.assertEqual(data.get("title"), post.title)
         self.assertNotEqual(data.get("created"), None)
         self.assertEqual(data.get("edited"), None)
 
