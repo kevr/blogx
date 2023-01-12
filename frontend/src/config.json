@@ -1,4 +1,8 @@
 {
   "appTitle": "Website Title",
+  "admin": {
+    "name": "John Doe",
+    "email": "admin@example.org"
+  },
   "apiPrefix": "http://localhost:8000"
 }
