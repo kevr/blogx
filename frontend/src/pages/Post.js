@@ -43,9 +43,12 @@ const Post = () => {
   return (
     <div>
       <div className="author text-small">
-        by <Link to={`/users/${post.author.id}`}>{post.author.name}</Link>
+        by{" "}
+        <Link to={`/users/${post.author.id}`} data-testid="post-author">
+          {post.author.name}
+        </Link>
       </div>
-      <div>{post.content}</div>
+      <div data-testid="post-content">{post.content}</div>
     </div>
   );
 };
