@@ -18,6 +18,8 @@ const Home = () => {
     if (apiLock.current) return;
     apiLock.current = true;
 
+    dispatch({ type: "DEFAULT_TITLE" });
+
     const getPosts = async () => {
       setLoading(true);
       setError(false);

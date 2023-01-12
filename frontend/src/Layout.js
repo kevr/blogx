@@ -1,11 +1,24 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Helmet from "react-helmet";
 import AuthWidget from "./AuthWidget";
 import logo from "./logo.svg";
 import config from "./config.json";
 
 const Layout = ({ children }) => {
+  const title = useSelector((state) => state.title);
+
+  let titleDisplay = config.appTitle;
+  if (title != config.appTitle) {
+    titleDisplay += " - " + title;
+  }
+
   return (
     <div className="page">
+      <Helmet>
+        <title>{titleDisplay}</title>
+      </Helmet>
+
       <div className="sidebar">
         <Link to="/">
           <div className="centered">
@@ -17,7 +30,7 @@ const Layout = ({ children }) => {
         <div>
           <div className="banner flex-display flex-col">
             <div className="flex"></div>
-            <h3 className="banner-text">{config.appTitle}</h3>
+            <h3 className="banner-text">{title}</h3>
             <div className="flex"></div>
           </div>
         </div>

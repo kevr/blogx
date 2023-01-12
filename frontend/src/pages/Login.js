@@ -12,6 +12,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  dispatch({ type: "SET_TITLE", title: "Login" });
+
   const onSubmit = async (event) => {
     event.preventDefault();
     setDone(false);
