@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import AuthWidget from "./AuthWidget";
 import logo from "./logo.svg";
+import config from "./config.json";
 
 const Layout = ({ children }) => {
   return (
@@ -12,7 +13,16 @@ const Layout = ({ children }) => {
           </div>
         </Link>
       </div>
-      <div className="content">{children}</div>
+      <div className="content">
+        <div>
+          <div className="banner flex-display flex-col">
+            <div className="flex"></div>
+            <h3 className="banner-text">{config.appTitle}</h3>
+            <div className="flex"></div>
+          </div>
+        </div>
+        <div>{children}</div>
+      </div>
       <div className="sidebar">
         <AuthWidget />
       </div>
