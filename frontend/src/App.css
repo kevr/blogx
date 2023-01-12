@@ -57,7 +57,6 @@
 
 .content {
   background-color: rgba(0, 0, 0, 0.15);
-  padding: 20px;
   width: 60%;
   max-width: 1080px;
 }
@@ -102,4 +101,39 @@
 
 .flex-col {
   flex-direction: column;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-small {
+  font-size: 14px;
+}
+
+.banner {
+  background-image: url("../public/images/banner.jpg");
+  background-size: cover;
+  height: 200px;
+  margin-bottom: 1rem;
+}
+
+.banner-text {
+  margin: 0;
+}
+
+.card small {
+  font-size: 14px;
+}
+
+.card-post {
+  transition: all 0.2s ease-in-out;
+}
+
+.card-post:hover {
+  opacity: 0.8;
 }
