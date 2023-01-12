@@ -30,7 +30,9 @@ const Layout = ({ children }) => {
         <div>
           <div className="banner flex-display flex-col">
             <div className="flex"></div>
-            <h3 className="banner-text">{title}</h3>
+            <h3 className="banner-text" data-testid="page-title">
+              {title}
+            </h3>
             <div className="flex"></div>
           </div>
         </div>
