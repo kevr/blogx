@@ -88,6 +88,6 @@ test("opt-out of rendering posts with API request failure", async () => {
   });
 
   expect(error).toHaveBeenCalledWith("Unable to retrieve posts");
-  const errorText = screen.getByText("Error: Unable to load data");
-  expect(errorText).toBeInTheDocument();
+  const errorElement = await screen.getByTestId("error");
+  expect(errorElement).toBeInTheDocument();
 });

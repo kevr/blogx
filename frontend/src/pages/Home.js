@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { apiRequest } from "../API";
+import { APIError } from "../Error";
 import Loader from "../Loader";
 import config from "../config";
 
@@ -53,18 +54,7 @@ const Home = () => {
   const content = loading ? (
     <Loader />
   ) : error ? (
-    <div>
-      <div>
-        <i className="red-text lighten-1 material-icons large">close</i>
-      </div>
-      <div>
-        <div>{"Error: Unable to load data"}</div>
-        <div className="text-small">
-          Contact webmaster{" "}
-          <a href={`mailto:${config.admin.email}`}>{config.admin.email}</a>
-        </div>
-      </div>
-    </div>
+    <APIError />
   ) : (
     posts.map((post) => (
       <Link key={post.id} to={`/posts/${post.id}`}>

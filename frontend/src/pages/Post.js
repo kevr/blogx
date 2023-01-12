@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { apiRequest } from "../API";
+import { APIError } from "../Error";
 import Loader from "../Loader";
 
 const Post = () => {
@@ -36,14 +37,7 @@ const Post = () => {
   }
 
   if (error) {
-    return (
-      <div>
-        <div>
-          <i className="red-text lighten-1 material-icons large">close</i>
-        </div>
-        <div>Error</div>
-      </div>
-    );
+    return <APIError />;
   }
 
   return (
