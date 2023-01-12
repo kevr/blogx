@@ -12,7 +12,8 @@ class UserSerializer(HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ["url", "name", "username", "email"]
+        read_only = ["id", "url"]
+        fields = ["id", "url", "name", "username", "email"]
 
     def get_name(self, user: User) -> str:
         return f"{user.first_name} {user.last_name}".strip()
