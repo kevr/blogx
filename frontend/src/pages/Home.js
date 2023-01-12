@@ -67,7 +67,7 @@ const Home = () => {
     </div>
   ) : (
     posts.map((post) => (
-      <Link key={post.id} to={`/post/${post.id}`}>
+      <Link key={post.id} to={`/posts/${post.id}`}>
         <div className="card card-post grey darken-3" data-testid="post">
           <div className="card-content">
             <span className="card-title text-left white-text">
