@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Home, Login } from "./pages";
+import { Home, Login, Post } from "./pages";
 import Layout from "./Layout";
 
 const router = createBrowserRouter([
@@ -16,6 +16,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <Login />
+      </Layout>
+    ),
+  },
+  {
+    path: "/post/:id",
+    element: (
+      <Layout>
+        <Post />
       </Layout>
     ),
   },
