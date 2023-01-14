@@ -1,6 +1,7 @@
 import { act, render, screen, within } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { createStore } from "../store";
 import Layout from "../Layout";
 import Post from "./Post";
@@ -46,9 +47,11 @@ test("Post renders", async () => {
     await render(
       <Provider store={store}>
         <BrowserRouter>
-          <Layout>
-            <Post />
-          </Layout>
+          <HelmetProvider>
+            <Layout>
+              <Post />
+            </Layout>
+          </HelmetProvider>
         </BrowserRouter>
       </Provider>
     );
@@ -91,7 +94,9 @@ test("Post renders error", async () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <Post />
+          <HelmetProvider>
+            <Post />
+          </HelmetProvider>
         </BrowserRouter>
       </Provider>
     );

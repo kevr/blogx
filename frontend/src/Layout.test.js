@@ -1,6 +1,7 @@
 import { act, render, screen, within, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { createStore } from "./store";
 import Layout from "./Layout";
 import config from "./config.json";
@@ -14,9 +15,11 @@ test("Redux title usage", async () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <Layout>
-            <span>Fake child</span>
-          </Layout>
+          <HelmetProvider>
+            <Layout>
+              <span>Fake child</span>
+            </Layout>
+          </HelmetProvider>
         </BrowserRouter>
       </Provider>
     );

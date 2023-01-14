@@ -1,4 +1,5 @@
 import { Provider } from "react-redux";
+import { HelmetProvider } from "react-helmet-async";
 import { createStore } from "./store";
 import Entry from "./Entry";
 import "materialize-css/dist/css/materialize.min.css";
@@ -9,7 +10,9 @@ function App() {
 
   return (
     <Provider store={store}>
-      <Entry />
+      <HelmetProvider>
+        <Entry />
+      </HelmetProvider>
     </Provider>
   );
 }

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Helmet from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import AuthWidget from "./AuthWidget";
 import logo from "./logo.svg";
 import config from "./config.json";
