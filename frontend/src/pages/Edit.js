@@ -7,7 +7,7 @@ import Markdown from "markdown-to-jsx";
 import "github-markdown-css";
 import { APIError } from "../Error";
 import Loader from "../Loader";
-import { apiRequest, apiRefresh } from "../API";
+import { apiRequest, apiInterval } from "../API";
 import "../Markdown.css";
 
 const Edit = () => {
@@ -47,22 +47,8 @@ const Edit = () => {
         });
     }
 
-    const interval = setInterval(() => {
-      apiRefresh(session.refresh)
-        .then((response) => response.json())
-        .then((data) => {
-          dispatch({
-            type: "SET_SESSION",
-            session: Object.assign({}, session, data),
-          });
-        })
-        .catch(() => {
-          // gg
-        });
-      // gg
-    }, 15000);
 
-    return () => clearInterval(interval);
+    return apiInterval(session, dispatch);
   });
 
   if (loading) {

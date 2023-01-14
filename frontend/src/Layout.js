@@ -1,16 +1,26 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import AuthWidget from "./AuthWidget";
+import { apiInterval } from "./API";
 import config from "./config.json";
 
 const Layout = ({ children }) => {
+  const session = useSelector((state) => state.session);
   const title = useSelector((state) => state.title);
+  const dispatch = useDispatch();
 
   let titleDisplay = config.appTitle;
   if (title !== config.appTitle) {
     titleDisplay += " - " + title;
   }
+
+  useEffect(() => {
+    if (session) {
+      return apiInterval(session, dispatch);
+    }
+  });
 
   return (
     <div className="page">

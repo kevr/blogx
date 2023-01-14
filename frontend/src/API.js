@@ -102,3 +102,21 @@ export const apiRequest = async (
 export const apiStatus = (session, dispatch) => {
   return apiRequest(session, dispatch, STATUS_ENDPOINT);
 };
+
+export const apiInterval = (session, dispatch, timeout = 60000) => {
+  const interval = setInterval(() => {
+    apiRefresh(session.refresh)
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({
+          type: "SET_SESSION",
+          session: Object.assign({}, session, data),
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, timeout);
+
+  return () => clearInterval(interval);
+};
