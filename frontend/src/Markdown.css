@@ -1,0 +1,12 @@
+/* Some extra styles and overrides to supplement github-markdown-css */
+.markdown-body {
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 20px 20px;
+}
+
+.markdown-body ul li:before {
+  content: "•";
+  margin-left: 10px;
+  margin-right: 5px;
+}

@@ -12,21 +12,23 @@ beforeEach(() => {
   fetch.mockClear();
 });
 
+const mockPost = (title, content) => ({
+  id: 1,
+  author: {
+    id: 999,
+    url: "http://testserver/users/999/",
+    name: "John Doe",
+    username: "john",
+    email: "john@example.org",
+  },
+  title: title,
+  content: content,
+  created: "2023-1-12T00:00:00Z",
+  edited: "2023-1-12T00:30:00Z",
+});
+
 test("Post renders", async () => {
-  const post = {
-    id: 1,
-    author: {
-      id: 999,
-      url: "http://testserver/users/999/",
-      name: "John Doe",
-      username: "john",
-      email: "john@example.org",
-    },
-    title: "Test Post",
-    content: "Some test content.",
-    created: "2023-1-12T00:00:00Z",
-    edited: "2023-1-12T00:30:00Z",
-  };
+  const post = mockPost("Test Post", "Some test content.");
 
   global.fetch = jest.fn(() => {
     return {
@@ -91,7 +93,7 @@ test("Post renders error", async () => {
 
   const store = createStore();
   await act(async () => {
-    render(
+    await render(
       <Provider store={store}>
         <BrowserRouter>
           <HelmetProvider>
@@ -104,4 +106,45 @@ test("Post renders error", async () => {
 
   const errorElement = await screen.getByTestId("error");
   expect(errorElement).toBeInTheDocument();
+});
+
+test("Post renders markdown", async () => {
+  const md = `# Heading
+
+[a link](/path/to/something)
+`;
+  const post = mockPost("Markdown Post", md);
+
+  global.fetch = jest.fn(() => {
+    return {
+      status: 200,
+      json: () => post,
+    };
+  });
+
+  jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"),
+    useParams: () => ({ id: "1" }),
+    useRouteMatch: () => ({ url: "/posts/1" }),
+  }));
+
+  const store = createStore();
+  const { container } = await act(async () => {
+    return await render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <HelmetProvider>
+            <Post />
+          </HelmetProvider>
+        </BrowserRouter>
+      </Provider>
+    );
+  });
+
+  const h1 = container.querySelector("h1");
+  expect(h1.textContent).toBe("Heading");
+
+  const a = container.querySelectorAll("a")[1];
+  expect(a.textContent).toBe("a link");
+  expect(a.getAttribute("href")).toBe("/path/to/something");
 });

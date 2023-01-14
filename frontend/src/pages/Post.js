@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import Markdown from "markdown-to-jsx";
+import "github-markdown-css";
 import { apiRequest } from "../API";
 import { APIError } from "../Error";
 import Loader from "../Loader";
+import "../Markdown.css";
 
 const Post = () => {
   const { id } = useParams();
@@ -49,7 +52,9 @@ const Post = () => {
           {post.author.name}
         </Link>
       </div>
-      <div data-testid="post-content">{post.content}</div>
+      <article className="markdown-body" data-testid="post-content">
+        <Markdown children={post.content} />
+      </article>
     </div>
   );
 };
