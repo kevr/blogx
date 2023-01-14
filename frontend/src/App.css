@@ -15,16 +15,19 @@
 }
 
 .app-logo {
+  margin-top: 7.5px;
   height: 60px;
   pointer-events: none;
   text-align: center;
 }
 
+/* create-react-app logo animation
 @media (prefers-reduced-motion: no-preference) {
   .app-logo {
     animation: app-logo-spin infinite 20s linear;
   }
 }
+*/
 
 .app-link {
   color: #61dafb;
