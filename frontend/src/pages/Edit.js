@@ -76,9 +76,7 @@ const Edit = () => {
   const onChange = (content) => {
     setEditorState(content);
     const blocks = convertToRaw(content.getCurrentContent()).blocks;
-    const value = blocks
-      .map((block) => (!block.text.trim() && "\n") || block.text)
-      .join("");
+    const value = blocks.map((block) => block.text).join("\n");
     setPost(Object.assign({}, post, { content: value }));
   };
 
