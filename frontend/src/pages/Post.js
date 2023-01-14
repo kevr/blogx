@@ -44,13 +44,23 @@ const Post = () => {
     return <APIError />;
   }
 
+  const isOwner = session && session.username === post.author.username;
+
   return (
     <div>
-      <div className="author text-small">
+      <div className="post-author text-small">
         by{" "}
         <Link to={`/users/${post.author.id}`} data-testid="post-author">
           {post.author.name}
         </Link>
+        {isOwner && (
+          <Link
+            className="red lighten-1 btn abs-right"
+            to={`/posts/${id}/edit`}
+          >
+            {"Edit Post"}
+          </Link>
+        )}
       </div>
       <article className="markdown-body" data-testid="post-content">
         <Markdown children={post.content} />

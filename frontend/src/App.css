@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  -webkit-box-sizing: border-box;
 }
 
 .app {
@@ -103,6 +102,10 @@
   flex-direction: column;
 }
 
+.flex-row {
+  flex-direction: row;
+}
+
 .text-left {
   text-align: left;
 }
@@ -136,4 +139,54 @@
 
 .card-post:hover {
   opacity: 0.8;
+}
+
+.btn {
+  transition: 0.2s all ease-in-out;
+}
+
+.post-author {
+  position: relative;
+}
+
+.post-author > .abs-right {
+  top: 0px;
+  right: 15px;
+}
+
+.post-editor-container .abs-right {
+  top: 0px;
+  right: 0px;
+}
+
+.abs-right {
+  position: absolute;
+}
+
+.full {
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+.half {
+  height: 100vh;
+  width: 50%;
+}
+
+.DraftEditor-editorContainer {
+  height: 100vh;
+  overflow: auto;
+  font-size: 16px;
+}
+
+.post-editor {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+}
+
+.scroll {
+  overflow-y: scroll;
+}
+
+.relative {
+  position: relative;
 }

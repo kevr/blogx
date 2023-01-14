@@ -1,10 +1,11 @@
+import Edit from "./Edit";
 import Home from "./Home";
 import Login from "./Login";
 import Post from "./Post";
 
 // Optional exports
-export { Home, Login, Post };
+export { Edit, Home, Login, Post };
 
 // Default export
-const exports = { Home, Login, Post };
+const exports = { Edit, Home, Login, Post };
 export default exports;
