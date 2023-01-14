@@ -72,7 +72,7 @@ export const apiRequest = async (
 
   // If the access token expired
   let updatedSession = null;
-  if (response.status === 401) {
+  if (response.status === 401 && session) {
     // Refresh the access token
     const tokenResponse = await apiRefresh(session.refresh);
 
