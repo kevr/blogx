@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiLogin } from "../API";
 
@@ -12,7 +12,9 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  dispatch({ type: "SET_TITLE", title: "Login" });
+  useEffect(() => {
+    dispatch({ type: "SET_TITLE", title: "Login" });
+  });
 
   const onSubmit = async (event) => {
     event.preventDefault();
