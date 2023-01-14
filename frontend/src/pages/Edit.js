@@ -47,6 +47,10 @@ const Edit = () => {
         });
     }
 
+    if (!session || (post && session.username !== post.author.username)) {
+      navigate(`/posts/${id}`);
+      return;
+    }
 
     return apiInterval(session, dispatch);
   });
