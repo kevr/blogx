@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
   const title = useSelector((state) => state.title);
 
   let titleDisplay = config.appTitle;
-  if (title != config.appTitle) {
+  if (title !== config.appTitle) {
     titleDisplay += " - " + title;
   }
 
