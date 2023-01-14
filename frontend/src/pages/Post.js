@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { apiRequest } from "../API";
 import { APIError } from "../Error";
@@ -9,6 +9,7 @@ const Post = () => {
   const { id } = useParams();
   const apiLock = useRef(false);
 
+  const session = useSelector((state) => state.session);
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(true);
@@ -19,7 +20,7 @@ const Post = () => {
     if (apiLock.current) return;
     apiLock.current = true;
 
-    apiRequest(null, null, `/posts/${id}`)
+    apiRequest(session, dispatch, `/posts/${id}`)
       .then((response) => response.json())
       .then((data) => {
         dispatch({ type: "SET_TITLE", title: data.title });

@@ -27,27 +27,17 @@ const AuthWidget = () => {
         // Obtain authentication status from the API
         const statusResponse = await apiStatus(sessionData, dispatch);
 
-        let updatedSession = null;
         // If our localSession access/refresh token is valid
         if (statusResponse.status === 200) {
           console.debug("Session validated");
-          updatedSession = sessionData;
         } else {
           console.error("Session expired");
         }
-
-        // Update the Redux store. If one of the tokens were valid, the
-        // store receives either the existing or updated tokens received
-        // by the API.
-        dispatch({
-          type: "SET_SESSION",
-          session: updatedSession,
-        });
       }
     };
 
     handleSession();
-  }, [session, dispatch]);
+  }, [session]);
 
   const onLogout = (event) => {
     event.preventDefault();

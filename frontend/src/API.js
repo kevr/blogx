@@ -63,10 +63,16 @@ export const apiRequest = async (
   }
 
   // Perform the request toward `endpoint`
-  const response = await fetch(endpoint_, options);
+  let response = await fetch(endpoint_, options);
+  if (response.status === 200) {
+    // Update Redux session, no matter what
+    dispatch({ type: "SET_SESSION", session: session });
+    return response;
+  }
 
   // If the access token expired
-  if (response.status === 401 && session) {
+  let updatedSession = null;
+  if (response.status === 401) {
     // Refresh the access token
     const tokenResponse = await apiRefresh(session.refresh);
 
@@ -76,15 +82,17 @@ export const apiRequest = async (
 
       // Update session's access token with the JSON response received
       const tokenData = await tokenResponse.json();
-      dispatch({
-        type: "SET_SESSION",
-        session: Object.assign(session, tokenData),
-      });
+      updatedSession = Object.assign({}, session, tokenData);
 
       // Try the fetch again with renewed token
       options.headers.Authorization = "Bearer " + tokenData.access;
-      return await fetch(endpoint_, options);
+      response = await fetch(endpoint_, options);
     }
+
+    dispatch({
+      type: "SET_SESSION",
+      session: updatedSession,
+    });
   }
 
   // If authentication failed, return the original failed response
