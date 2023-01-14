@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { apiRequest } from "../API";
 import { APIError } from "../Error";
 import Loader from "../Loader";
-import config from "../config";
 
 const Home = () => {
   const session = useSelector((state) => state.session);
@@ -25,7 +24,7 @@ const Home = () => {
       setLoading(true);
       setError(false);
 
-      const response = await apiRequest(session, dispatch, "titles")
+      apiRequest(session, dispatch, "titles")
         .then((response) => response.json())
         .then((posts) => {
           console.debug("Loaded posts");
