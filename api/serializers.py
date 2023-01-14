@@ -59,7 +59,7 @@ class PostSerializer(HyperlinkedModelSerializer):
 
     def update(self, post: Post, data: dict) -> Post:
         content = data.get("content", post.content)
-        title = data.get("title", post.content)
+        title = data.get("title", post.title)
 
         changed = False
         if content != post.content:
