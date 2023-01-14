@@ -7,7 +7,7 @@ import Markdown from "markdown-to-jsx";
 import "github-markdown-css";
 import { APIError } from "../Error";
 import Loader from "../Loader";
-import { apiRequest } from "../API";
+import { apiRequest, apiRefresh } from "../API";
 import "../Markdown.css";
 
 const Edit = () => {
@@ -28,23 +28,41 @@ const Edit = () => {
   );
 
   useEffect(() => {
-    if (apiLock.current) return;
-    apiLock.current = true;
+    if (!apiLock.current) {
+      apiLock.current = true;
 
-    apiRequest(session, dispatch, `/posts/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch({ type: "SET_TITLE", title: data.title });
-        // Break all repeated \n chars down to a single \n
-        const content = ContentState.createFromText(data.content);
-        setEditorState(EditorState.createWithContent(content));
-        setPost(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError(true);
-        setLoading(false);
-      });
+      apiRequest(session, dispatch, `/posts/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          dispatch({ type: "SET_TITLE", title: data.title });
+          // Break all repeated \n chars down to a single \n
+          const content = ContentState.createFromText(data.content);
+          setEditorState(EditorState.createWithContent(content));
+          setPost(data);
+          setLoading(false);
+        })
+        .catch(() => {
+          setError(true);
+          setLoading(false);
+        });
+    }
+
+    const interval = setInterval(() => {
+      apiRefresh(session.refresh)
+        .then((response) => response.json())
+        .then((data) => {
+          dispatch({
+            type: "SET_SESSION",
+            session: Object.assign({}, session, data),
+          });
+        })
+        .catch(() => {
+          // gg
+        });
+      // gg
+    }, 15000);
+
+    return () => clearInterval(interval);
   });
 
   if (loading) {
