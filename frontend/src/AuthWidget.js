@@ -37,7 +37,7 @@ const AuthWidget = () => {
     };
 
     handleSession();
-  }, [session]);
+  }, [session, dispatch]);
 
   const onLogout = (event) => {
     event.preventDefault();
