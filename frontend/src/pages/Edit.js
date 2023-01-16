@@ -41,7 +41,8 @@ const Edit = () => {
           setPost(data);
           setLoading(false);
         })
-        .catch(() => {
+        .catch((error) => {
+          console.error(error);
           setError(true);
           setLoading(false);
         });
@@ -74,27 +75,29 @@ const Edit = () => {
     // 1. Submit PATCH to API
     apiRequest(session, dispatch, `posts/${id}/`, "patch", {
       content: post.content,
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          // Navigate back to <Post>
-          navigate(`/posts/${id}`);
-        } else {
-          console.error(response);
-        }
-      })
-      .catch(() => {});
+    }).then((response) => {
+      if (response.status === 200) {
+        // Navigate back to <Post>
+        navigate(`/posts/${id}`);
+      } else {
+        console.error(response);
+      }
+    });
   };
 
   return (
     <div className="full flex flex-display flex-row relative post-editor-container">
-      <button className="red lighten-1 btn abs-right" onClick={onSave}>
+      <button
+        className="red lighten-1 btn abs-right"
+        onClick={onSave}
+        data-testid="save-button"
+      >
         {"Save Changes"}
       </button>
-      <div className="half post-editor">
+      <div className="half post-editor" data-testid="post-editor">
         <Editor editorState={editorState} onChange={onChange} />
       </div>
-      <div className="half scroll">
+      <div className="half scroll" data-testid="post-preview">
         <article className="markdown-body preview" data-testid="post-content">
           <Markdown children={post.content} />
         </article>

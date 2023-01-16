@@ -103,19 +103,23 @@ export const apiStatus = (session, dispatch) => {
   return apiRequest(session, dispatch, STATUS_ENDPOINT);
 };
 
+export const intervalImpl = (session, dispatch) => {
+  return apiRefresh(session.refresh)
+    .then((response) => response.json())
+    .then((data) => {
+      dispatch({
+        type: "SET_SESSION",
+        session: Object.assign({}, session, data),
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
 export const apiInterval = (session, dispatch, timeout = 60000) => {
   const interval = setInterval(() => {
-    apiRefresh(session.refresh)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch({
-          type: "SET_SESSION",
-          session: Object.assign({}, session, data),
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    intervalImpl(session, dispatch);
   }, timeout);
 
   return () => clearInterval(interval);

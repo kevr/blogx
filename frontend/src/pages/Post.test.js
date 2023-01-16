@@ -5,26 +5,12 @@ import { HelmetProvider } from "react-helmet-async";
 import { createStore } from "../store";
 import Layout from "../Layout";
 import Post from "./Post";
+import { mockPost } from "../Testing";
 
 global.fetch = jest.fn();
 
 beforeEach(() => {
   fetch.mockClear();
-});
-
-const mockPost = (title, content) => ({
-  id: 1,
-  author: {
-    id: 999,
-    url: "http://testserver/users/999/",
-    name: "John Doe",
-    username: "john",
-    email: "john@example.org",
-  },
-  title: title,
-  content: content,
-  created: "2023-1-12T00:00:00Z",
-  edited: "2023-1-12T00:30:00Z",
 });
 
 test("Post renders", async () => {
@@ -147,4 +133,41 @@ test("Post renders markdown", async () => {
   const a = container.querySelectorAll("a")[1];
   expect(a.textContent).toBe("a link");
   expect(a.getAttribute("href")).toBe("/path/to/something");
+});
+
+test("Post renders Edit Post link when viewed by owner", async () => {
+  const post = mockPost("Test Post", "Test content.");
+  post.author = Object.assign({}, post.author, { username: "test" });
+
+  global.fetch = jest.fn(() => {
+    return {
+      status: 200,
+      json: () => post,
+    };
+  });
+
+  const store = createStore();
+  store.dispatch({
+    type: "SET_SESSION",
+    session: {
+      username: post.author.username,
+      access: "test_access",
+      refresh: "test_refresh",
+    },
+  });
+
+  await act(async () => {
+    await render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <HelmetProvider>
+            <Post />
+          </HelmetProvider>
+        </BrowserRouter>
+      </Provider>
+    );
+  });
+
+  const editLink = screen.getByText("Edit Post");
+  expect(editLink).toBeInTheDocument();
 });

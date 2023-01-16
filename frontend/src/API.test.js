@@ -1,9 +1,21 @@
-import { apiRequest } from "./API";
+import { apiRequest, apiInterval, intervalImpl } from "./API";
 
 global.fetch = jest.fn();
+global.setInterval = jest.fn();
+
+const error = jest.spyOn(console, "error").mockImplementation(() => {});
 
 beforeEach(() => {
   fetch.mockClear();
+  setInterval.mockClear();
+});
+
+afterEach(() => {
+  error.mockClear();
+});
+
+afterAll(() => {
+  error.mockRestore();
 });
 
 test("apiRequest operates without session", async () => {
@@ -12,7 +24,7 @@ test("apiRequest operates without session", async () => {
   const endpoint = "/test/";
   const data = { key: "value" };
 
-  global.fetch = jest.fn().mockImplementationOnce((_, options) => {
+  fetch.mockImplementationOnce((_, options) => {
     return Promise.resolve({
       status: 200,
     });
@@ -52,11 +64,40 @@ test("apiRequest fails", async () => {
   // apiRequest attempts to refresh its session after an
   // initial HTTP 401, so this tests repeated HTTP 401s,
   // so that the refresh request also fails.
-  global.fetch = jest.fn((_, options) => {
+  fetch
+    .mockImplementationOnce((_, options) => {
+      return Promise.resolve({
+        status: 401,
+      });
+    })
+    .mockImplementationOnce((_, options) => {
+      return Promise.resolve({
+        status: 401,
+      });
+    });
+
+  const response = await apiRequest(session, dispatch, endpoint, "post", data);
+});
+
+test("apiInterval throws", async () => {
+  jest.spyOn(console, "error");
+
+  const fetch_ = fetch.mockImplementationOnce((_, options) => {
     return Promise.resolve({
-      status: 401,
+      status: 500,
+      json: () => {
+        throw new Error("Exception");
+      },
     });
   });
 
-  const response = await apiRequest(session, dispatch, endpoint, "post", data);
+  const session = {
+    access: "test_access",
+    refresh: "test_refresh",
+  };
+  const dispatch = (action) => {};
+
+  await intervalImpl(session, dispatch);
+  await expect(fetch_).toHaveBeenCalledTimes(1);
+  await expect(error).toHaveBeenCalledTimes(1);
 });

@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { Home, Login, Post, Edit } from "./pages";
 import Layout from "./Layout";
 
-const router = createBrowserRouter([
+export const routes = [
   {
     path: "/",
     element: (
@@ -31,6 +31,8 @@ const router = createBrowserRouter([
     path: "/posts/:id/edit",
     element: <Edit />,
   },
-]);
+];
+
+const router = createBrowserRouter(routes);
 
 export default router;
