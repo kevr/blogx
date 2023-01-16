@@ -166,13 +166,14 @@ class PostsTest(TestCase):
 
         # Patch an existing post
         endpoint = self._endpoint(post.id)
-        data = {"content": "updated"}
+        data = {"title": "New title", "content": "updated"}
         response = self.client.patch(endpoint, data=data)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
         # Expect that the post's edited column was set
         data = response.json()
         self.assertEqual(data.get("content"), "updated")
+        self.assertEqual(data.get("title"), "New title")
         self.assertNotEqual(data.get("edited"), None)
 
         # Compare JSON we got with our updated post object
