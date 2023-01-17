@@ -1,7 +1,29 @@
 from django.conf import settings
 from django.db import models
 from django.db.models import (AutoField, CharField, DateTimeField, ForeignKey,
-                              TextField)
+                              IntegerField, TextField, URLField)
+
+FACEBOOK = 1
+TWITTER = 2
+GITHUB = 3
+
+SOCIAL_TYPES = (
+    (FACEBOOK, "Facebook"),
+    (TWITTER, "Twitter"),
+    (GITHUB, "Github"),
+)
+
+
+class Profile(models.Model):
+    user = ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    avatar = URLField()
+    bio = TextField()
+
+
+class Social(models.Model):
+    profile = ForeignKey(Profile, on_delete=models.CASCADE)
+    type = IntegerField(choices=SOCIAL_TYPES)
+    url = URLField()
 
 
 class Post(models.Model):
