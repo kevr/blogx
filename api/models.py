@@ -16,8 +16,11 @@ SOCIAL_TYPES = (
 
 class Profile(models.Model):
     user = ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    avatar = URLField()
-    bio = TextField()
+    avatar = URLField(default=str(), blank=True)
+    bio = TextField(default=str(), blank=True)
+
+    def __str__(self) -> str:
+        return self.user.username
 
 
 class Social(models.Model):
