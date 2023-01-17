@@ -1,12 +1,13 @@
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { apiStatus } from "./API";
 
 const AuthWidget = () => {
   const session = useSelector((state) => state.session);
   const dispatch = useDispatch();
   const apiLock = useRef(false);
+  const location = useLocation();
 
   useEffect(() => {
     // Renders can be called more than once, since React expects
@@ -49,10 +50,11 @@ const AuthWidget = () => {
     });
   };
 
+  const pathname = encodeURIComponent(location.pathname);
   const content = !session ? (
     <div className="centered">
       <Link
-        to="/login/"
+        to={`/login/?next=${pathname}`}
         className="waves-effect waves-light red lighten-1 btn"
       >
         Login

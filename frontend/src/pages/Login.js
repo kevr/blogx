@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { apiLogin } from "../API";
 
 const Login = () => {
@@ -11,6 +11,9 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [params] = useSearchParams();
+  const next = decodeURIComponent(params.get("next", "/"));
 
   useEffect(() => {
     dispatch({ type: "SET_TITLE", title: "Login" });
@@ -28,7 +31,7 @@ const Login = () => {
           username: user,
         }),
       });
-      navigate("/");
+      navigate(next);
     } else {
       setDone(true);
       setError("Invalid username or password");
