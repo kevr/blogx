@@ -29,7 +29,7 @@ const Layout = ({ children }) => {
         <title>{titleDisplay}</title>
       </Helmet>
 
-      <div className="full-width">
+      <div className="full-width flex-display flex-col">
         <div className="banner flex-display flex-col">
           <div className="banner-container flex flex-display flex-col">
             <div className="flex"></div>
@@ -47,11 +47,10 @@ const Layout = ({ children }) => {
               </div>
               <div className="flex"></div>
             </div>
-
             <div className="flex"></div>
           </div>
         </div>
-        <div className="full-width flex-display flex-row">
+        <div className="full-width flex flex-display flex-row">
           <div className="sidebar">
             <Link to="/">
               <div className="centered">
