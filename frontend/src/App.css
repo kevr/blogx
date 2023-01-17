@@ -147,7 +147,9 @@
   text-align: right;
 }
 
-.banner .annotation {
+.banner .author {
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 18px;
 }
 
