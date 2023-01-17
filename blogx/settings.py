@@ -23,7 +23,7 @@ SECRET_KEY = os.environ.get(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get("DEBUG", "1") != "0")
 
 # The admin can supply more allowed hosts separated by
 # spaces in the HOSTS envvar.
