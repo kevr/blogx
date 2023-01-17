@@ -26,7 +26,11 @@ const Post = () => {
     apiRequest(session, dispatch, `/posts/${id}`)
       .then((response) => response.json())
       .then((data) => {
-        dispatch({ type: "SET_TITLE", title: data.title });
+        dispatch({
+          type: "SET_TITLE",
+          title: data.title,
+          author: data.author,
+        });
         setPost(data);
         setLoading(false);
       })
@@ -49,13 +53,10 @@ const Post = () => {
   return (
     <div>
       <div className="post-author text-small">
-        by{" "}
-        <Link to={`/users/${post.author.id}`} data-testid="post-author">
-          {post.author.name}
-        </Link>
         {isOwner && (
           <Link
             className="red lighten-1 btn abs-right"
+            data-testid="edit-button"
             to={`/posts/${id}/edit`}
           >
             {"Edit Post"}

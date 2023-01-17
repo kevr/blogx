@@ -1,11 +1,22 @@
 import config from "../config.json";
 
-export const titleReducer = (state = config.appTitle, action) => {
+const defaultState = {
+  page: config.appTitle,
+  author: undefined,
+};
+
+export const titleReducer = (state = defaultState, action) => {
   switch (action.type) {
     case "DEFAULT_TITLE":
-      return config.appTitle;
+      return Object.assign({}, state, {
+        page: config.appTitle,
+        author: undefined,
+      });
     case "SET_TITLE":
-      return action.title;
+      return Object.assign({}, state, {
+        page: action.title,
+        author: action.author,
+      });
     default:
       return state;
   }

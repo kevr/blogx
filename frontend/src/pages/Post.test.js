@@ -51,11 +51,6 @@ test("Post renders", async () => {
   }
 
   {
-    const { getByText } = within(await screen.getByTestId("post-author"));
-    expect(getByText(post.author.name)).toBeInTheDocument();
-  }
-
-  {
     const { getByText } = within(await screen.getByTestId("post-content"));
     expect(getByText(post.content)).toBeInTheDocument();
   }
@@ -130,7 +125,7 @@ test("Post renders markdown", async () => {
   const h1 = container.querySelector("h1");
   expect(h1.textContent).toBe("Heading");
 
-  const a = container.querySelectorAll("a")[1];
+  const a = container.querySelectorAll("a")[0];
   expect(a.textContent).toBe("a link");
   expect(a.getAttribute("href")).toBe("/path/to/something");
 });
