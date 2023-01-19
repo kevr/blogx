@@ -66,10 +66,14 @@ const Profile = () => {
           </a>
         )}
       </div>
-      <div>
+      <div className="text-left">
+        <hr />
+        <h5>Bio</h5>
         <p className="text-justify">{user.profile.bio}</p>
       </div>
       <div className="socials">
+        <hr />
+        <h5>Socials</h5>
         {user.profile.socials.map((social, index) => (
           <Social data={social} key={index} />
         ))}
