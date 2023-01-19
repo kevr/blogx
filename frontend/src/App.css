@@ -222,3 +222,37 @@
 .relative {
   position: relative;
 }
+
+.text-justify {
+  text-align: justify;
+}
+
+.profile {
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+.profile p {
+  font-size: 20px;
+}
+
+.profile-avatar {
+  border-radius: 50%;
+}
+
+.socials {
+  text-align: left;
+}
+
+.socials * {
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.socials a {
+  font-size: 16px;
+}
+
+.social-media-logo {
+  margin-right: 12px;
+}

@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Home, Login, Post, Edit } from "./pages";
+import { Edit, Home, Login, Post, Profile } from "./pages";
 import Layout from "./Layout";
 
 export const routes = [
@@ -30,6 +30,14 @@ export const routes = [
   {
     path: "/posts/:id/edit",
     element: <Edit />,
+  },
+  {
+    path: "/users/:id",
+    element: (
+      <Layout>
+        <Profile />
+      </Layout>
+    ),
   },
 ];
 
