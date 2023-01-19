@@ -23,7 +23,7 @@ class ProfileSerializer(ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ["avatar", "bio", "socials"]
+        fields = ["avatar", "bio", "webpage", "socials"]
 
 
 class SimpleUserSerializer(HyperlinkedModelSerializer):
