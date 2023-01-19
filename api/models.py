@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.db.models import (AutoField, CharField, DateTimeField, ForeignKey,
-                              IntegerField, TextField, URLField)
+                              IntegerField, OneToOneField, TextField, URLField)
 
 FACEBOOK = 1
 TWITTER = 2
@@ -15,7 +15,7 @@ SOCIAL_TYPES = (
 
 
 class Profile(models.Model):
-    user = ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     avatar = URLField(default=str(), blank=True)
     bio = TextField(default=str(), blank=True)
 
@@ -24,7 +24,9 @@ class Profile(models.Model):
 
 
 class Social(models.Model):
-    profile = ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name="socials"
+    )
     type = IntegerField(choices=SOCIAL_TYPES)
     url = URLField()
 
