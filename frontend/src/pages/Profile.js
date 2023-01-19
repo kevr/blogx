@@ -54,6 +54,18 @@ const Profile = () => {
           alt="Profile avatar"
         />
       </div>
+      <div className="information">
+        {user.profile.webpage && (
+          <a
+            className="red lighten-1 btn"
+            href={user.profile.webpage}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {"View Personal Webpage"}
+          </a>
+        )}
+      </div>
       <div>
         <p className="text-justify">{user.profile.bio}</p>
       </div>
