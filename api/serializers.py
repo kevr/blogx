@@ -2,12 +2,31 @@ from datetime import datetime
 
 from django.contrib.auth.models import User
 from rest_framework.serializers import (HyperlinkedModelSerializer,
-                                        SerializerMethodField)
+                                        ModelSerializer, SerializerMethodField)
 
-from .models import Post
+from .models import Post, Profile, Social
 
 
-class UserSerializer(HyperlinkedModelSerializer):
+class SocialSerializer(ModelSerializer):
+    location = SerializerMethodField()
+
+    class Meta:
+        model = Social
+        fields = ["location", "url"]
+
+    def get_location(self, social: Social) -> str:
+        return Social.get_location(social.type)
+
+
+class ProfileSerializer(ModelSerializer):
+    socials = SocialSerializer(many=True)
+
+    class Meta:
+        model = Profile
+        fields = ["avatar", "bio", "socials"]
+
+
+class SimpleUserSerializer(HyperlinkedModelSerializer):
     name = SerializerMethodField()
 
     class Meta:
@@ -17,6 +36,15 @@ class UserSerializer(HyperlinkedModelSerializer):
 
     def get_name(self, user: User) -> str:
         return f"{user.first_name} {user.last_name}".strip()
+
+
+class UserSerializer(SimpleUserSerializer):
+    profile = ProfileSerializer()
+
+    class Meta:
+        model = User
+        read_only = ["id", "url", "profile"]
+        fields = ["id", "url", "profile", "name", "username", "email"]
 
 
 class PostTitleSerializer(HyperlinkedModelSerializer):
@@ -36,7 +64,7 @@ class PostTitleSerializer(HyperlinkedModelSerializer):
 
 
 class PostSerializer(HyperlinkedModelSerializer):
-    author = UserSerializer(required=False)
+    author = SimpleUserSerializer(required=False)
 
     class Meta:
         model = Post

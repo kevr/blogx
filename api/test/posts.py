@@ -3,7 +3,7 @@ from http import HTTPStatus
 from typing import Any
 
 from api.models import Post
-from api.serializers import UserSerializer
+from api.serializers import SimpleUserSerializer
 from django.contrib.auth.models import User
 from django.test import TestCase
 from rest_framework.test import APIClient, APIRequestFactory
@@ -144,7 +144,9 @@ class PostsTest(TestCase):
         # Compare author output against UserSerializer
         request_factory = APIRequestFactory()
         request = request_factory.get(endpoint)
-        author = UserSerializer(self.user, context={"request": request}).data
+        author = SimpleUserSerializer(
+            self.user, context={"request": request}
+        ).data
         self.assertEqual(author, data.get("author"))
 
     def test_patch_unauthorized(self) -> None:
@@ -204,7 +206,9 @@ class PostsTest(TestCase):
         # Compare author output against UserSerializer
         request_factory = APIRequestFactory()
         request = request_factory.patch(endpoint, data=data, format="json")
-        author = UserSerializer(self.user, context={"request": request}).data
+        author = SimpleUserSerializer(
+            self.user, context={"request": request}
+        ).data
         self.assertEqual(author, data.get("author"))
 
     def test_put_unauthorized(self) -> None:

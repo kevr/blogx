@@ -30,6 +30,10 @@ class Social(models.Model):
     type = IntegerField(choices=SOCIAL_TYPES)
     url = URLField()
 
+    @staticmethod
+    def get_location(type: int) -> str:
+        return SOCIAL_TYPES[type - 1][1]
+
 
 class Post(models.Model):
     id = AutoField(primary_key=True)
