@@ -25,12 +25,6 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get("DEBUG", "1") != "0")
 
-# The admin can supply more allowed hosts separated by
-# spaces in the HOSTS envvar.
-# Ex: HOSTS="abc.com www.abc.com" HOSTS="abc.com"
-HOSTS = [host for host in os.environ.get("HOSTS", "").split(" ") if host]
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"] + HOSTS
-
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -136,8 +130,20 @@ scheme = "http"
 if not DEBUG:
     scheme = "https"  # pragma: no cover
 
-CORS_ALLOWED_ORIGINS = [f"{scheme}://{host}" for host in HOSTS]
-print(f"Allowed origins: {CORS_ALLOWED_ORIGINS}")
+# The admin can supply more allowed hosts separated by
+# spaces in the HOSTS envvar.
+# Ex: HOSTS="abc.com www.abc.com" HOSTS="abc.com"
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+HOST = os.environ.get("HOST", None)
+if HOST:
+    ALLOWED_HOSTS.append(HOST)
+print(f"ALLOWED_HOSTS: {ALLOWED_HOSTS}")
+
+CORS_ALLOWED_ORIGINS = []
+ORIGIN = os.environ.get("ORIGIN", None)
+if ORIGIN:
+    CORS_ALLOWED_ORIGINS.append(ORIGIN)
+print(f"CORS_ALLOWED_ORIGINS: {CORS_ALLOWED_ORIGINS}")
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
