@@ -73,7 +73,7 @@ const Edit = () => {
 
   const onSave = () => {
     // 1. Submit PATCH to API
-    apiRequest(session, dispatch, `posts/${id}/`, "patch", {
+    apiRequest(session, dispatch, `posts/${id}/`, "PATCH", {
       content: post.content,
     }).then((response) => {
       if (response.status === 200) {
