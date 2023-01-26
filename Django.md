@@ -54,5 +54,8 @@ Django:
 ### Production
 
 To run the server in production, a WSGI server like
-[uWSGI](https://github.com/unbit/uwsgi) should be used as a frontend.
-Follow [Django's uWSGI documentation](https://docs.djangoproject.com/en/4.1/howto/deployment/wsgi/uwsgi/).
+[uWSGI](https://docs.djangoproject.com/en/4.1/howto/deployment/wsgi/uwsgi/)
+should be used as an upstream to an HTTP server like *nginx* or *apache*.
+
+- [examples/uwsgi/blogx.ini](examples/uwsgi/blogx.ini)
+- [examples/nginx/blogx.conf](examples/nginx/blogx.conf)
