@@ -10,20 +10,31 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+import sys
 from datetime import timedelta
 from pathlib import Path
+
+
+def error(message: str) -> None:
+    print(f"error: {message}")
+    sys.exit(1)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: In production, the SECRET_KEY envvar
 # should be set in django's environment.
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY", "django-insecure-0=vtb2nsvjc*u&cfgz)o!-f+1^)f6mjwy%#f^tw9a8"
-)
+DEBUG_SECRET_KEY = "django-insecure-0=vtb2nsvjc*u&cfgz)o!-f+1^)f6mjwy%#f^tw9a8"
+SECRET_KEY = os.environ.get("SECRET_KEY", DEBUG_SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get("DEBUG", "1") != "0")
+
+if not DEBUG and SECRET_KEY == DEBUG_SECRET_KEY:
+    # Unset SECRET_KEY at this point in case other modules are using it
+    SECRET_KEY = None
+    error("DEBUG is false, but SECRET_KEY was not set")
 
 # Application definition
 INSTALLED_APPS = [
